@@ -1,0 +1,110 @@
+npm install webpack webpack-cli --save-dev
+npm install --save-dev style-loader css-loader
+npm install --save-dev cvs-loader xml-loader
+npm install toml yamljs json5 --save-dev <---- Customize parser of JSON modules
+npm install --save-dev html-webpack-plugin
+
+npm install --save-dev webpack-dev-server
+npm install --save-dev express webpack-dev-middleware
+
+npm install --save-dev webpack-merge
+- To separate production and development builds
+- 3 files, webpack.common.js, webpack.dev.js, and webpack.prod.js (can reference documentation https://webpack.js.org/guides/production/)
+- In package.json, modify the scripts to include...
+  "start": "webpack serve --open --config webpack.dev.js",
+  "build": "webpack --config webpack.prod.js"
+***** NOTE: Avoid inline-source-map for production, use devtool: 'source-map' instead,
+
+For future reference: Minimizing CSS for production https://webpack.js.org/plugins/mini-css-extract-plugin/#minimizing-for-production
+
+npx webpack
+
+// Development Tools
+inline-source-map is for error tracing
+1. Watch Mode - webpack will watch all files within the dependency graph for changes
+  Code will be recompiled if files are updated (don't have to run full build manually)
+  - In package.json, add to scripts, "watch": "webpack --watch",
+2. Webpack-dev-server - web server and use of live reloading
+  look at basic layout below to see what to add
+  - In package.json, add to scripts, "start": "webpack serve --open",
+3. (not focused on for TOP) Webpack-dev-middleware - wrapper that emits files processed by webpack to a server
+  this is used in webpack-dev-server internally but is available as a separate package for customization
+  - must add publicPath: '/', in config like below
+  - make server.js file, use code from this link https://webpack.js.org/guides/development/
+  - In package.json, add to scripts, "server": "node server.js"
+
+// Instead of relying on a global /assets directory
+// loading assets this way makes your code more portable
+// group assets with the code that uses them
+
+// Basic layout
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+module.exports = {
+mode: 'development', <---- or 'production'
+  entry: './src/index.js',
+  devtool: 'inline-source-map', <---- to track down errors/warnings to original location (since its bundled up)
+  devServer: {
+  static: './dist', <---- web server and live reload, make sure to add optimization at bottom
+  watchFiles: ['src/**/*.php', 'public/**/*'], <---- Ensure server/page automatically reloads when you modify template html files
+},
+  plugins: [
+  new HtmlWebpackPlugin({
+    title: 'Output Management',
+  }),
+],
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    clean: true, <---- ensures that only used files will be generated
+    publicPath: '/', <---- middleware uses it to make sure files are served correctly on localhost:3000
+  },
+  optimization: {
+  runtimeChunk: 'single', <---- used together with web server (resolves code splitting)
+},
+  module: {
+  rules: [
+    {
+      test: /\.css$/i, <---- regex to identify css files
+      use: ['style-loader', 'css-loader'], <--- style loader comes first
+    },
+    {
+      test: /\.(png|svg|jpg|jpeg|gif)$/i, <---- Loading images
+      type: 'asset/resource',
+    },
+    {
+      test: /\.(woff|woff2|eot|ttf|otf)$/i, <---- Loading fonts
+      type: 'asset/resource',
+    },
+    {
+      test: /\.(csv|tsv)$/i, <---- Loading data
+      use: ['csv-loader'],
+    },
+    {
+      test: /\.xml$/i,
+      use: ['xml-loader'],
+    },
+      {
+      test: /\.toml$/i, <---- JSON parser
+      type: 'json',
+      parser: {
+        parse: toml.parse,
+      },
+    },
+    {
+      test: /\.yaml$/i,
+      type: 'json',
+      parser: {
+        parse: yaml.parse,
+      },
+    },
+    {
+      test: /\.json5$/i,
+      type: 'json',
+      parser: {
+        parse: json5.parse,
+      },
+    },
+  ],
+},
+};
