@@ -1,0 +1,58 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.header-container {
+    border: 2px solid black;
+    height: 10vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header {
+    border: 2px solid black;
+}
+
+.main-container {
+    border: 2px solid black;
+    height: 90vh;
+    width: 100vw;
+    display: flex;
+}
+
+.sidebar-container {
+    border: 2px solid black;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+}
+
+.side-header {
+    border: 2px solid black;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.add-task {
+    display: inline-block;
+    margin: 10% 5% 10% 10%;
+}
+
+.add-task-button {
+
+}
+
+.sidebar-list {
+    border: 2px solid black;
+    width: 100%;
+    /* overflow-wrap: break-word; /* prevent overflow to other divs if text is long, can set to 'anywhere' as well, has different behavior in certain cases */
+}
+
+.to-do-list-container {
+    border: 2px solid black;
+    width: 75%;
+}

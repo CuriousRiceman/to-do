@@ -16,8 +16,10 @@ npm install --save-dev webpack-merge
 ***** NOTE: Avoid inline-source-map for production, use devtool: 'source-map' instead,
 
 For future reference: Minimizing CSS for production https://webpack.js.org/plugins/mini-css-extract-plugin/#minimizing-for-production
+npm install mini-css-extract-plugin --save-dev
 
 npx webpack
+npx webpack --watch
 
 // Development Tools
 inline-source-map is for error tracing
