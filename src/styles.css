@@ -52,6 +52,12 @@
     /* overflow-wrap: break-word; /* prevent overflow to other divs if text is long, can set to 'anywhere' as well, has different behavior in certain cases */
 }
 
+#new-task-dialog { /* Since I removed all margin and padding at top (css reset) */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .to-do-list-container {
     border: 2px solid black;
     width: 75%;
