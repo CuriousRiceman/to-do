@@ -14,27 +14,29 @@
         <div class="sidebar-container">
             <div class="sidebar-header">
                 <p class="add-task">Add new task</p> <!-- Block element by default, can use span tag instead but I will set p to inline-block -->
-                <button type="button" class="add-task-button">+</button>
+                <button type="button" class="add-task-button">Add</button>
                 <dialog id="new-task-dialog">
                     <form id="task-form">
-                    <div class="form-container-one">
-                        <label for="title">Title:</label><br>
-                        <input type="text" id="title" name="title"><br>
-                        <label for="description">Description</label><br>
-                        <textarea name="description" rows="" cols="" maxlength=""></textarea><br>
-                        <label for="dueDate">Due date</label><br>
-                        <input type="date" id="dueDate" name="dueDate"><br>
-                    </div>
-                    <div class="form-container-two">
-                        <label for="read">Priority</label>
-                        <input type="radio" id="low" name="priority">Low</form>
-                        <input type="radio" id="medium" name="priority">Low</form>
-                        <input type="radio" id="high" name="priority">Low</form>
-                    </div>
-                    <div class="submit-or-cancel">
-                        <button class="submit-button">Submit</button>
-                        <button class="cancel-button">Cancel</button>
-                    </div>
+                        <div class="form-container-one">
+                            <label for="title">Title:</label><br>
+                            <input type="text" id="title" name="title"><br>
+                            <label for="description">Description</label><br>
+                            <textarea id="description" name="description" rows="" cols="" maxlength=""></textarea><br>
+                            <label for="dueDate">Due date</label><br>
+                            <input type="date" id="dueDate" name="dueDate"><br>
+                        </div>
+                        <div class="form-container-two">
+                            <p id="read">Priority</p>
+                            <div class="priority-buttons">
+                                <input type="radio" id="low" name="priority">Low</input>
+                                <input type="radio" id="medium" name="priority">Medium</input>
+                                <input type="radio" id="high" name="priority">High</input>
+                            </div>
+                        </div>
+                        <div class="submit-or-cancel">
+                            <button class="submit-button">Submit</button>
+                            <button class="cancel-button">Cancel</button>
+                        </div>
                     </form>
                 </dialog>
             </div>

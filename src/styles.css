@@ -43,7 +43,8 @@
 }
 
 .add-task-button {
-
+    width: 50px; /* Pixels in this case to preserve width regardless of viewport resizing */
+    /* overflow-wrap: break-word; /* Assuming you use % for width, this will prevent overflow but it looks weird if you resize the width to a small size */
 }
 
 .sidebar-list {
@@ -56,6 +57,34 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    padding: 1em;
+}
+
+#task-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#task-form > div:not(:last-child) {
+    margin: 5px;
+    display: flex;
+    flex-direction: column; /* Default is row, hence main axis is horizontal, cross axis is vertical, but if set to column, it switches, hence I use align-items */
+    align-items: center;
+    gap: 5px;
+}
+
+.form-container-one {
+
+}
+
+.form-container-two  {
+
+}
+
+.submit-or-cancel {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
 }
 
 .to-do-list-container {

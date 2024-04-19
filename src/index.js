@@ -7,6 +7,12 @@ const dialog = document.querySelector('#new-task-dialog');
 const submitButton = document.querySelector('.submit-button');
 const cancelButton = document.querySelector('.cancel-button');
 
+const title = document.querySelector('#title');
+const description = document.querySelector('#description');
+const dueDate = document.querySelector('#dueDate');
+const priorityLow = document.querySelector('#low');
+const priorityMedium = document.querySelector('#medium');
+const priorityHigh = document.querySelector('#high');
 
 addButton.addEventListener("click", () => {
     dialog.showModal();
