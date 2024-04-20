@@ -1,34 +1,51 @@
 import './styles.css'; // This will not generate a link to the file in the html file, it will generate the css code in <style> tags if you check dev tools, better to use minimize css
+import { Task } from './projectAndTask.js';
+import { Project } from './projectAndTask.js';
 
 const sidebar = document.querySelector('.sidebar-container');
-const addButton = document.querySelector('.add-task-button');
+const addProjectButton = document.querySelector('.add-project-button');
+const projectDialog = document.querySelector('#new-project-dialog');
+const submitProjectButton = document.querySelector('.submit-project-button');
+const cancelProjectButton = document.querySelector('.cancel-project-button');
+
 const toDoList = document.querySelector('.to-do-list-container');
-const dialog = document.querySelector('#new-task-dialog');
-const submitButton = document.querySelector('.submit-button');
-const cancelButton = document.querySelector('.cancel-button');
+const addTaskButton = document.querySelector('.add-task-button');
+const taskDialog = document.querySelector('#new-task-dialog');
+const submitTaskButton = document.querySelector('.submit-task-button');
+const cancelTaskButton = document.querySelector('.cancel-task-button');
 
-const title = document.querySelector('#title');
-const description = document.querySelector('#description');
-const dueDate = document.querySelector('#dueDate');
-const priorityLow = document.querySelector('#low');
-const priorityMedium = document.querySelector('#medium');
-const priorityHigh = document.querySelector('#high');
+const titleElem = document.querySelector('#title');
+const descriptionElem = document.querySelector('#description');
+const dueDateElem = document.querySelector('#dueDate');
+const priorityLowElem = document.querySelector('#low');
+const priorityMediumElem = document.querySelector('#medium');
+const priorityHighElem = document.querySelector('#high');
 
-addButton.addEventListener("click", () => {
-    dialog.showModal();
+
+addProjectButton.addEventListener("click", () => {
+    projectDialog.showModal();
+});
+
+submitProjectButton.addEventListener("click", () => {
+    const projectName = document.querySelector('#projName').value;
+    const myProject = new Project(projectName);
+    myProject.storeProject(projectName);
 });
   
-// submitButton.addEventListener("click", (event) => {
-//     event.preventDefault();
-//     const titleValue = titleInput.value;
-//     const authorValue = authorInput.value;
-//     const pageValue = pagesInput.value;
-//     const readValue = readCheckbox.checked;
-//     dialog.close();
-// });
+cancelProjectButton.addEventListener("click", () => {
+    projectDialog.close();
+});
 
-cancelButton.addEventListener("click", () => {
-    dialog.close();
+addTaskButton.addEventListener("click", () => {
+    taskDialog.showModal();
+});
+
+submitTaskButton.addEventListener("click", () => {
+
+});
+
+cancelTaskButton.addEventListener("click", () => {
+    taskDialog.close();
 });
   
 

@@ -13,8 +13,26 @@
     <div class="main-container">
         <div class="sidebar-container">
             <div class="sidebar-header">
-                <p class="add-task">Add new task</p> <!-- Block element by default, can use span tag instead but I will set p to inline-block -->
-                <button type="button" class="add-task-button">Add</button>
+                <p class="add-project">Projects</p> <!-- Block element by default, can use span tag instead but I will set p to inline-block -->
+                <button type="button" class="add-project-button">Add new project</button>
+                <dialog id="new-project-dialog">
+                    <form id="project-form">
+                        <div class="form-container-one">
+                            <label for="projName">Project name:</label><br>
+                            <input type="text" id="projName" name="projName">
+                        </div>
+                        <div class="submit-or-cancel">
+                            <button class="submit-project-button">Submit</button>
+                            <button class="cancel-project-button">Cancel</button>
+                        </div>
+                    </form>
+                </dialog>
+            </div>
+            <div class="sidebar-list">
+                
+            </div>
+        </div>
+        <div class="to-do-list-container">
                 <dialog id="new-task-dialog">
                     <form id="task-form">
                         <div class="form-container-one">
@@ -34,18 +52,12 @@
                             </div>
                         </div>
                         <div class="submit-or-cancel">
-                            <button class="submit-button">Submit</button>
-                            <button class="cancel-button">Cancel</button>
+                            <button class="submit-task-button">Submit</button>
+                            <button class="cancel-task-button">Cancel</button>
                         </div>
                     </form>
                 </dialog>
-            </div>
-            <div class="sidebar-list">
-                
-            </div>
-        </div>
-        <div class="to-do-list-container">
-            
+                <button type="button" class="add-task-button">Add new task</button>
         </div>
     </div>
 </body>

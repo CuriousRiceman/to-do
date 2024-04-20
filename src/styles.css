@@ -37,13 +37,13 @@
     flex-direction: row;
 }
 
-.add-task {
+.add-task, .add-project {
     display: inline-block;
     margin: 10% 5% 10% 10%;
 }
 
-.add-task-button {
-    width: 50px; /* Pixels in this case to preserve width regardless of viewport resizing */
+.add-task-button, .add-project-button {
+    width: 150px; /* Pixels in this case to preserve width regardless of viewport resizing */
     /* overflow-wrap: break-word; /* Assuming you use % for width, this will prevent overflow but it looks weird if you resize the width to a small size */
 }
 
@@ -53,14 +53,14 @@
     /* overflow-wrap: break-word; /* prevent overflow to other divs if text is long, can set to 'anywhere' as well, has different behavior in certain cases */
 }
 
-#new-task-dialog { /* Since I removed all margin and padding at top (css reset) */
+#new-task-dialog, #new-project-dialog { /* Since I removed all margin and padding at top (css reset) */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 1em;
 }
 
-#task-form {
+#task-form, #project-form {
     display: flex;
     flex-direction: column;
 }
