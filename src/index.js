@@ -21,6 +21,16 @@ const priorityLowElem = document.querySelector('#low');
 const priorityMediumElem = document.querySelector('#medium');
 const priorityHighElem = document.querySelector('#high');
 
+// Notes:
+    // Store an array of projects in ONE localStorage key?
+    // Store each project as an individual key (name)?
+        // Iterate through localStorage since it contains array of KEYS already (console.log(localStorage))
+        // Or store it in an array and iterate through that instead
+const projectArrayContainer = [];
+
+document.addEventListener('DOMContentLoaded', () => {
+
+});
 
 addProjectButton.addEventListener("click", () => {
     projectDialog.showModal();
@@ -28,13 +38,18 @@ addProjectButton.addEventListener("click", () => {
 
 submitProjectButton.addEventListener("click", () => {
     const projectName = document.querySelector('#projName').value;
-    const myProject = new Project(projectName);
-    myProject.storeProject(projectName);
+    const myProject = new Project(projectName); // Object stored in array (contains the variables initialized in constructor)
+    projectArrayContainer.push(myProject);
+    // Figure out storage method and dom display
+    // Note: console.log(localStorage), lists array of objects
+    myProject.storeProject(projectName, myProject); // Store the name as key and object as value in local storage, similar to array above
 });
-  
+
 cancelProjectButton.addEventListener("click", () => {
     projectDialog.close();
 });
+
+
 
 addTaskButton.addEventListener("click", () => {
     taskDialog.showModal();

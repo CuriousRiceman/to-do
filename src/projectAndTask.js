@@ -3,17 +3,27 @@ export class Project {
         this.name = name;
     }
 
-    getName() {
+    getProjectName() {
         return this.name;
     }
 
-    storeProject(projectName) {
-        localStorage.setItem("projectName", projectName);
-        console.log("hi");
+    getProjectObject() {
+        const projectString = localStorage.getItem(this.name);
+        return JSON.parse(projectString);
+    }
+
+    storeProject() {
+        const projectObject = { // Figure out what info to have
+            tasks: {
+                "do": "hey hows it"
+            }
+        };
+        const projectString = JSON.stringify(projectObject); // Local storage only supports string values
+        localStorage.setItem(this.name, projectString);
     }
     
     deleteProject() {
-        localStorage.removeItem("projectName");
+        localStorage.removeItem(this.name);
     }
 }
 
@@ -25,7 +35,7 @@ export class Task {
         this.priority = priority;
     }
 
-    addProject() {
+    addTask() {
 
     }
 
