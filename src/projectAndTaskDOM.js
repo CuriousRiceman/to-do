@@ -1,60 +1,40 @@
-import { createAddTaskButton, createNewTaskDialog } from "./reuseableDomParts";
+import { createAddTaskButton, createNewTaskDialog, createToDoList } from "./reuseableDomParts";
 import { Project } from "./projectAndTask";
+
 export function generateProjectDiv(component) {
     const storageLength = localStorage.length;
-    if (storageLength === 0) {
+    const projectArray = JSON.parse(localStorage.getItem('projectOrder'));
+    if (storageLength === 0 || projectArray.length === 0) {
         return;
     }
-
-    for (let i = 0; i < storageLength; i++) {
-        const key = localStorage.key(i);
-        const keyValue = localStorage.getItem(key);
-        
+    const sideBarList = document.querySelector('.sidebar-list');
+    sideBarList.innerHTML = "";
+    projectArray.forEach((projectName) => {
+        const keyValue = localStorage.getItem(projectName);
+        // Note: The use of ID or TIMESTAMP can be used to preserve the order on items saved.
+        // By default, localStorage will sort the items alphabetically
+        // In this project, I will use an array to store the projects in order
         const projectContainer = document.createElement("button");
         projectContainer.className = "list-project-button";
-        projectContainer.textContent = key; // Don't use innerHTML due to security risk (can interpret HTML)
+        projectContainer.textContent = projectName; // Don't use innerHTML due to security risk (can interpret HTML)
         component.appendChild(projectContainer);
-        console.log(key);
-        console.log(keyValue);
-        // Can definitely get this as a parameter just like 'component' for reuseability, however, I'm tired.
-        const toDoList = document.querySelector('.to-do-list-container');
-        
-        // Separate and make it a reuseable DOM portion, takes in parameter key
-        // ^ intended for default page upon opening it
         projectContainer.addEventListener("click", () => {
-            toDoList.innerHTML = "";
-            const addTaskButtonElem = createAddTaskButton();
-            const newTaskDialogElem = createNewTaskDialog();
-            const heading = document.createElement("h2");
-
-            heading.textContent = key;
-            toDoList.appendChild(heading);
-            toDoList.appendChild(addTaskButtonElem);
-            toDoList.appendChild(newTaskDialogElem);
-
-            const addTaskButton = document.querySelector('.add-task-button');
-            const taskDialog = document.querySelector('#new-task-dialog');
-            const submitTaskButton = document.querySelector('.submit-task-button');
-            const cancelTaskButton = document.querySelector('.cancel-task-button');
-
-            addTaskButton.addEventListener("click", () => {
-                taskDialog.showModal();
-            });
-            submitTaskButton.addEventListener("click", () => {
-
-            });
-            cancelTaskButton.addEventListener("click", () => {
-                taskDialog.close();
-            });
+            createToDoList(projectName);
         });
-
-        
-    }
+    });
 }
 
 export function generateDefaultProject() {
-    const defaultProject = new Project("Default");
-    defaultProject.storeProject();
+    if (localStorage.getItem('Default') === null) {
+        const defaultProject = new Project("Default");
+        const projectArray = JSON.parse(localStorage.getItem('projectOrder')) || [];
+        projectArray.push(defaultProject.getProjectName());
+        localStorage.setItem('projectOrder', JSON.stringify(projectArray));
+        defaultProject.storeProject();
+        createToDoList(defaultProject.getProjectName());
+    } else {
+        return;
+    }
 }
 
 export function generateProjectTasks() {

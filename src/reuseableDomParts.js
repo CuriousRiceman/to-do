@@ -124,3 +124,31 @@ export function createNewTaskDialog() {
     dialog.appendChild(form);
     return dialog;
 }
+
+export function createToDoList(key) {
+    const toDoList = document.querySelector('.to-do-list-container');
+    toDoList.innerHTML = "";
+    const addTaskButtonElem = createAddTaskButton();
+    const newTaskDialogElem = createNewTaskDialog();
+    const heading = document.createElement("h2");
+
+    heading.textContent = key;
+    toDoList.appendChild(heading);
+    toDoList.appendChild(addTaskButtonElem);
+    toDoList.appendChild(newTaskDialogElem);
+
+    const addTaskButton = document.querySelector('.add-task-button');
+    const taskDialog = document.querySelector('#new-task-dialog');
+    const submitTaskButton = document.querySelector('.submit-task-button');
+    const cancelTaskButton = document.querySelector('.cancel-task-button');
+
+    addTaskButton.addEventListener("click", () => {
+        taskDialog.showModal();
+    });
+    submitTaskButton.addEventListener("click", () => {
+
+    });
+    cancelTaskButton.addEventListener("click", () => {
+        taskDialog.close();
+    });
+}
