@@ -1,3 +1,4 @@
+import { Task } from "./projectAndTask";
 // Function to create the "Add new task" button
 export function createAddTaskButton() {
     const button = document.createElement('button');
@@ -42,6 +43,7 @@ export function createNewTaskDialog() {
     formContainerOne.appendChild(document.createElement('br'));
 
     const descriptionTextarea = document.createElement('textarea');
+    descriptionTextarea.style.resize = 'none';
     descriptionTextarea.id = 'description';
     descriptionTextarea.name = 'description';
     formContainerOne.appendChild(descriptionTextarea);
@@ -146,7 +148,23 @@ export function createToDoList(key) {
         taskDialog.showModal();
     });
     submitTaskButton.addEventListener("click", () => {
-
+        const titleElem = document.querySelector('#title');
+        const descriptionElem = document.querySelector('#description');
+        const dueDateElem = document.querySelector('#dueDate');
+        const radioButtons = document.querySelectorAll(`input[name="priority"]`);
+        let checkedButton = null;
+    
+        radioButtons.forEach(radioButton => {
+            if (radioButton.checked) {
+                checkedButton = radioButton;
+            } else {
+                return;
+            }
+        });
+        // Note: Learn about sanitizing inputs, can definitely write a function for that
+        const myTask = new Task(titleElem.value, descriptionElem.value, dueDateElem.value, checkedButton.value, heading.textContent);
+        myTask.storeTaskUnderProject();
+        // call function that generates the div
     });
     cancelTaskButton.addEventListener("click", () => {
         taskDialog.close();

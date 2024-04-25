@@ -13,11 +13,7 @@ export class Project {
     }
 
     storeProject() {
-        const projectObject = { // Figure out what info to have
-            tasks: {
-                "init": "init value"
-            }
-        };
+        const projectObject = { };
         const projectString = JSON.stringify(projectObject); // Local storage only supports string values
         localStorage.setItem(this.name, projectString);
     }
@@ -33,11 +29,29 @@ export class Project {
 
 export class Task {
     constructor(title, description, dueDate, priority, whichProject) {
+        this.whichProject = whichProject;
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
         this.whichProject = whichProject; // Uhhh trial and error.
+    }
+
+    storeTaskUnderProject() {
+        const projectTaskObject = JSON.parse(localStorage.getItem(this.whichProject));
+        const newTask = {
+            description: this.description,
+            dueDate: this.dueDate,
+            priority: this.priority,
+            whichProject: this.whichProject
+        };
+        projectTaskObject[this.title] = newTask;
+        localStorage.setItem(this.whichProject, JSON.stringify(projectTaskObject));
+        console.log("done");
+    }
+
+    getWhichProject() {
+        return this.whichProject;
     }
 
     getTitle() {

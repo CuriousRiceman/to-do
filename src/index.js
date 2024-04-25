@@ -13,6 +13,7 @@ const toDoList = document.querySelector('.to-do-list-container');
 
 generateDefaultProject();
 generateProjectDiv(sideBarList);
+createToDoList("Default");
 
 addProjectButton.addEventListener("click", () => {
     projectDialog.showModal();
@@ -37,30 +38,7 @@ cancelProjectButton.addEventListener("click", (event) => {
     projectDialog.close();
 });
 
-// Put this portion in the projectAndTaskDOM file
-// submitTaskButton.addEventListener("click", () => {
-//     const titleElem = document.querySelector('#title');
-//     const descriptionElem = document.querySelector('#description');
-//     const dueDateElem = document.querySelector('#dueDate');
-//     const radioButtons = document.querySelectorAll(`input[name="priority"]`);
-//     let checkedButton = null;
 
-//     radioButtons.forEach(radioButton => {
-//         if (radioButton.checked) {
-//             checkedButton = radioButton;
-//         } else {
-//             return;
-//         }
-//     });
-
-//     // Note: Learn about sanitizing inputs, can definitely write a function for that
-//     // Work on getting the task logic working, add to project its under by referenceing header textContent
-//     // then generate the DOM for tasks
-//     const myTask = new Task(titleElem.value, descriptionElem.value, dueDateElem.value, checkedButton.textContent); // Could set value for buttons in html
-// });
   
-
-
-
 
 
