@@ -1,4 +1,5 @@
 import { Task } from "./projectAndTask";
+import { generateProjectTasks } from "./projectAndTaskDOM";
 // Function to create the "Add new task" button
 export function createAddTaskButton() {
     const button = document.createElement('button');
@@ -105,7 +106,6 @@ export function createNewTaskDialog() {
     formContainerTwo.appendChild(priorityDiv);
     form.appendChild(formContainerTwo);
 
-    // Create the submit and cancel buttons
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'submit-or-cancel';
 
@@ -122,7 +122,6 @@ export function createNewTaskDialog() {
 
     form.appendChild(buttonContainer);
 
-    // Append form to dialog
     dialog.appendChild(form);
     return dialog;
 }
@@ -133,9 +132,13 @@ export function createToDoList(key) {
     const addTaskButtonElem = createAddTaskButton();
     const newTaskDialogElem = createNewTaskDialog();
     const heading = document.createElement("h2");
+    const listTasks = document.createElement("div")
 
     heading.textContent = key;
+    listTasks.className = "tasks-display";
+    listTasks.innerHTML = "Hello"; // call function that loops and displays the items
     toDoList.appendChild(heading);
+    toDoList.appendChild(listTasks);
     toDoList.appendChild(addTaskButtonElem);
     toDoList.appendChild(newTaskDialogElem);
 
@@ -164,9 +167,10 @@ export function createToDoList(key) {
         // Note: Learn about sanitizing inputs, can definitely write a function for that
         const myTask = new Task(titleElem.value, descriptionElem.value, dueDateElem.value, checkedButton.value, heading.textContent);
         myTask.storeTaskUnderProject();
-        // call function that generates the div
+        generateProjectTasks(listTasks, key); // Displays it once a new task is created
     });
     cancelTaskButton.addEventListener("click", () => {
         taskDialog.close();
     });
+    generateProjectTasks(listTasks, key); // Displays it one the list is created
 }

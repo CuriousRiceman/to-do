@@ -1,5 +1,4 @@
-import { createAddTaskButton, createNewTaskDialog, createToDoList } from "./reuseableDomParts";
-import { Project } from "./projectAndTask";
+import { createAddTaskButton, createNewTaskDialog, createToDoList} from "./reuseableDomParts";
 
 export function generateProjectDiv(component) {
     const storageLength = localStorage.length;
@@ -24,19 +23,33 @@ export function generateProjectDiv(component) {
     });
 }
 
-export function generateDefaultProject() {
-    if (localStorage.getItem('Default') === null) {
-        const defaultProject = new Project("Default");
-        const projectArray = JSON.parse(localStorage.getItem('projectOrder')) || [];
-        projectArray.push(defaultProject.getProjectName());
-        localStorage.setItem('projectOrder', JSON.stringify(projectArray));
-        defaultProject.storeProject();
-        createToDoList(defaultProject.getProjectName());
-    } else {
-        return;
-    }
-}
+export function generateProjectTasks(parentContainer, whichProject) {
+    const projectTasks = JSON.parse(localStorage.getItem(whichProject));
+    // Note: projectTasks is an object that contains objects (key, value is object)
+    // for loops primarily applies to arrays, Object.keys() returns an array of the object keys
+    parentContainer.innerHTML = '';
+    Object.keys(projectTasks).forEach((taskTitle) => {
+        const taskDetails = projectTasks[taskTitle];
+        
+        const taskContainer = document.createElement('div');
+        taskContainer.className = 'task-container'; // Individual card for each task, style it
 
-export function generateProjectTasks() {
+        const descriptionElement = document.createElement('p');
+        descriptionElement.textContent = `Description: ${taskDetails.description}`;
+        taskContainer.appendChild(descriptionElement);
 
+        const dueDateElement = document.createElement('p');
+        dueDateElement.textContent = `Due Date: ${taskDetails.dueDate}`;
+        taskContainer.appendChild(dueDateElement);
+
+        const priorityElement = document.createElement('p');
+        priorityElement.textContent = `Priority: ${taskDetails.priority}`;
+        taskContainer.appendChild(priorityElement);
+
+        const projectElement = document.createElement('p');
+        projectElement.textContent = `Which Project: ${taskDetails.whichProject}`;
+        taskContainer.appendChild(projectElement);
+
+        parentContainer.appendChild(taskContainer);
+    });
 }
