@@ -21,10 +21,6 @@ export class Project {
     deleteProject() {
         localStorage.removeItem(this.name);
     }
-
-    removeTask() {
-        
-    }
 }
 
 export class Task {

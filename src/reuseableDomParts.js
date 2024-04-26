@@ -134,6 +134,7 @@ export function createToDoList(key) {
     const heading = document.createElement("h2");
     const listTasks = document.createElement("div")
 
+    heading.className = "project-task-header"
     heading.textContent = key;
     listTasks.className = "tasks-display";
     listTasks.innerHTML = "Hello"; // call function that loops and displays the items
@@ -150,7 +151,8 @@ export function createToDoList(key) {
     addTaskButton.addEventListener("click", () => {
         taskDialog.showModal();
     });
-    submitTaskButton.addEventListener("click", () => {
+    submitTaskButton.addEventListener("click", (event) => {
+        event.preventDefault();
         const titleElem = document.querySelector('#title');
         const descriptionElem = document.querySelector('#description');
         const dueDateElem = document.querySelector('#dueDate');
@@ -168,6 +170,7 @@ export function createToDoList(key) {
         const myTask = new Task(titleElem.value, descriptionElem.value, dueDateElem.value, checkedButton.value, heading.textContent);
         myTask.storeTaskUnderProject();
         generateProjectTasks(listTasks, key); // Displays it once a new task is created
+        taskDialog.close();
     });
     cancelTaskButton.addEventListener("click", () => {
         taskDialog.close();
