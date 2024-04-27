@@ -30,7 +30,7 @@ export class Task {
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
-        this.whichProject = whichProject; // Uhhh trial and error.
+        this.whichProject = whichProject;
     }
 
     storeTaskUnderProject() {
@@ -43,7 +43,6 @@ export class Task {
         };
         projectTaskObject[this.title] = newTask;
         localStorage.setItem(this.whichProject, JSON.stringify(projectTaskObject));
-        console.log("done");
     }
 
     getWhichProject() {

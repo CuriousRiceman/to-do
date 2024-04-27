@@ -117,7 +117,7 @@
     margin: 1em 0;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* minmax(300px 1,fr) means min width of 300px, maximum width of 1fr which is a fraction of remaining space */
     /* Auto-fit creates columns that stretch to fit the available space, auto-fill may leave empty space at end if not filled entirely */
-    grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-rows: repeat(auto-fill, minmax(225px, 1fr));
     overflow-y: scroll;
     height: 80%;
     padding: 1em;
@@ -133,7 +133,9 @@
 }
 
 /* Can definitely set description header and then description text below */
-.task-container p:first-child {
+/* Thought: Put "Add new task" button along side the project header */
+.task-container p:nth-child(2) {
     height: 75px;
     overflow-y: scroll; /* So the long description doesn't make a ridiculous height */
+    border: 1px solid black;
 }

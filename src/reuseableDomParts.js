@@ -13,7 +13,6 @@ export function createAddTaskButton() {
 export function createNewTaskDialog() {
     const dialog = document.createElement('dialog');
     dialog.id = 'new-task-dialog';
-
     // Create the form
     const form = document.createElement('form');
     form.id = 'task-form';
@@ -30,6 +29,7 @@ export function createNewTaskDialog() {
     formContainerOne.appendChild(document.createElement('br'));
 
     const titleInput = document.createElement('input');
+    titleInput.value = "";
     titleInput.type = 'text';
     titleInput.id = 'title';
     titleInput.name = 'title';
@@ -44,6 +44,7 @@ export function createNewTaskDialog() {
     formContainerOne.appendChild(document.createElement('br'));
 
     const descriptionTextarea = document.createElement('textarea');
+    descriptionTextarea.value = "";
     descriptionTextarea.style.resize = 'none';
     descriptionTextarea.id = 'description';
     descriptionTextarea.name = 'description';
@@ -58,6 +59,7 @@ export function createNewTaskDialog() {
     formContainerOne.appendChild(document.createElement('br'));
 
     const dueDateInput = document.createElement('input');
+    dueDateInput.value = "";
     dueDateInput.type = 'date';
     dueDateInput.id = 'dueDate';
     dueDateInput.name = 'dueDate';
@@ -80,6 +82,7 @@ export function createNewTaskDialog() {
     priorityDiv.className = 'priority-buttons';
 
     const lowPriority = document.createElement('input');
+    lowPriority.checked = false;
     lowPriority.type = 'radio';
     lowPriority.id = 'low';
     lowPriority.name = 'priority';
@@ -88,6 +91,7 @@ export function createNewTaskDialog() {
     priorityDiv.appendChild(document.createTextNode('Low'));
 
     const mediumPriority = document.createElement('input');
+    mediumPriority.checked = false;
     mediumPriority.type = 'radio';
     mediumPriority.id = 'medium';
     mediumPriority.name = 'priority';
@@ -96,6 +100,7 @@ export function createNewTaskDialog() {
     priorityDiv.appendChild(document.createTextNode('Medium'));
 
     const highPriority = document.createElement('input');
+    highPriority.checked = false;
     highPriority.type = 'radio';
     highPriority.id = 'high';
     highPriority.name = 'priority';
@@ -110,6 +115,7 @@ export function createNewTaskDialog() {
     buttonContainer.className = 'submit-or-cancel';
 
     const submitButton = document.createElement('button');
+    submitButton.type = "submit";
     submitButton.className = 'submit-task-button';
     submitButton.textContent = 'Submit';
     buttonContainer.appendChild(submitButton);
@@ -133,7 +139,6 @@ export function createToDoList(key) {
     const newTaskDialogElem = createNewTaskDialog();
     const heading = document.createElement("h2");
     const listTasks = document.createElement("div")
-
     heading.className = "project-task-header"
     heading.textContent = key;
     listTasks.className = "tasks-display";
@@ -147,7 +152,7 @@ export function createToDoList(key) {
     const taskDialog = document.querySelector('#new-task-dialog');
     const submitTaskButton = document.querySelector('.submit-task-button');
     const cancelTaskButton = document.querySelector('.cancel-task-button');
-
+    
     addTaskButton.addEventListener("click", () => {
         taskDialog.showModal();
     });
@@ -170,6 +175,13 @@ export function createToDoList(key) {
         const myTask = new Task(titleElem.value, descriptionElem.value, dueDateElem.value, checkedButton.value, heading.textContent);
         myTask.storeTaskUnderProject();
         generateProjectTasks(listTasks, key); // Displays it once a new task is created
+        // Reset the values
+        titleElem.value = "";
+        descriptionElem.value = "";
+        dueDateElem.value = "";
+        radioButtons.forEach(radioButton => {
+            radioButton.checked = false;
+        });
         taskDialog.close();
     });
     cancelTaskButton.addEventListener("click", () => {
