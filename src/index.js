@@ -11,22 +11,22 @@ const cancelProjectButton = document.querySelector('.cancel-project-button');
 const sideBarList = document.querySelector('.sidebar-list');
 const toDoList = document.querySelector('.to-do-list-container');
 
-function generateDefaultProject() {
-    if (localStorage.getItem('Default') === null) {
-        const defaultProject = new Project("Default");
+function generateAllProject() {
+    if (localStorage.getItem('All') === null) {
+        const allProject = new Project("All");
         const projectArray = JSON.parse(localStorage.getItem('projectOrder')) || [];
-        projectArray.push(defaultProject.getProjectName());
+        projectArray.push(allProject.getProjectName());
         localStorage.setItem('projectOrder', JSON.stringify(projectArray));
-        defaultProject.storeProject();
-        createToDoList(defaultProject.getProjectName());
+        allProject.storeProject();
+        createToDoList(allProject.getProjectName());
     } else {
         return;
     }
 }
 
-generateDefaultProject();
+generateAllProject();
 generateProjectDiv(sideBarList);
-createToDoList("Default");
+createToDoList("All");
 
 addProjectButton.addEventListener("click", () => {
     projectDialog.showModal();

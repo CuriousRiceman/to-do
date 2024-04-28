@@ -21,6 +21,27 @@ export function generateProjectDiv(component) {
         projectContainer.addEventListener("click", () => {
             createToDoList(projectName);
         });
+        
+        if (projectName === "All") {
+            return;
+        } else {
+            const deleteProjectButton = document.createElement('button');
+            deleteProjectButton.className = "delete-project-button";
+            deleteProjectButton.textContent = "X";
+            projectContainer.appendChild(deleteProjectButton);
+            deleteProjectButton.addEventListener("click", (event) => {
+                event.stopPropagation(); // Button is inside another button, prevents from clicking both (bubbling up)
+                console.log(projectName);
+                const projectIndex = projectArray.indexOf(projectName);
+                console.log(projectIndex);
+                projectArray.splice(projectIndex, 1);
+                console.log(projectArray);
+                localStorage.setItem("projectOrder", JSON.stringify(projectArray));
+                localStorage.removeItem(projectName);
+                generateProjectDiv(component);
+                createToDoList("All");
+            });
+        }
     });
 }
 

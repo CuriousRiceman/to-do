@@ -139,3 +139,10 @@
     overflow-y: scroll; /* So the long description doesn't make a ridiculous height */
     border: 1px solid black;
 }
+
+.delete-project-button {
+    position: relative;
+    float: right;
+    margin-right: 5px;
+    border-style: none;
+}

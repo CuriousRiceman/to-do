@@ -17,10 +17,6 @@ export class Project {
         const projectString = JSON.stringify(projectObject); // Local storage only supports string values
         localStorage.setItem(this.name, projectString);
     }
-    
-    deleteProject() {
-        localStorage.removeItem(this.name);
-    }
 }
 
 export class Task {
