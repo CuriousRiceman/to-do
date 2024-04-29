@@ -45,14 +45,14 @@ export function generateProjectDiv(component) {
     });
 }
 
-export function generateProjectTasks(parentContainer, whichProject) {
-    const projectTasks = JSON.parse(localStorage.getItem(whichProject));
+export function generateProjectTasks(parentContainer, forWhichProject) {
+    const projectTasks = JSON.parse(localStorage.getItem(forWhichProject));
     // Note: projectTasks is an object that contains objects (key, value is object)
     // for loops primarily applies to arrays, Object.keys() returns an array of the object keys
     parentContainer.innerHTML = '';
     Object.keys(projectTasks).forEach((taskTitle) => {
         const taskDetails = projectTasks[taskTitle];
-        
+        console.log(taskDetails);
         const taskContainer = document.createElement('div');
         taskContainer.className = 'task-container'; // Individual card for each task, style it
         // Can just access the task title using the parameter above BUT, if you want to do the following...
@@ -81,9 +81,24 @@ export function generateProjectTasks(parentContainer, whichProject) {
         completeTaskButton.textContent = "Complete";
         completeTaskButton.className = "complete-task-button";
         completeTaskButton.addEventListener("click", () => {
-            delete projectTasks[taskTitle];
-            localStorage.setItem(whichProject, JSON.stringify(projectTasks));
-            generateProjectTasks(parentContainer, whichProject);
+            if (forWhichProject === "All") {
+                const originalProjectName = taskDetails["whichProject"];
+                const originalProjectsTask = JSON.parse(localStorage.getItem(originalProjectName));
+                delete originalProjectsTask[taskTitle];
+                localStorage.setItem(originalProjectName, JSON.stringify(originalProjectsTask));
+                // Deletes from "All" object as well as the original project it is linked to
+                delete projectTasks[taskTitle];
+                localStorage.setItem(forWhichProject, JSON.stringify(projectTasks));
+                generateProjectTasks(parentContainer, forWhichProject);
+            } else {
+                delete projectTasks[taskTitle];
+                localStorage.setItem(forWhichProject, JSON.stringify(projectTasks));
+                generateProjectTasks(parentContainer, forWhichProject);
+                // Will delete from the "All" object as well
+                const allTasks = JSON.parse(localStorage.getItem("All"));
+                delete allTask[taskTitle];
+                localStorage.setItem("All", JSON.stringify(allTasks));
+            }
         });;
         taskContainer.appendChild(completeTaskButton);
         parentContainer.appendChild(taskContainer);

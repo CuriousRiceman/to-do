@@ -175,6 +175,7 @@ export function createToDoList(key) {
         const myTask = new Task(titleElem.value, descriptionElem.value, dueDateElem.value, checkedButton.value, heading.textContent);
         myTask.storeTaskUnderProject();
         generateProjectTasks(listTasks, key); // Displays it once a new task is created
+        
         // Reset the values
         titleElem.value = "";
         descriptionElem.value = "";
