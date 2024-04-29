@@ -58,21 +58,38 @@ export function generateProjectTasks(parentContainer, forWhichProject) {
         // Can just access the task title using the parameter above BUT, if you want to do the following...
         // taskContainer.dataset.taskTitle = taskTitle; // This is to allow the complete button to get which task it is suppose to delete
         // taskContainer.setAttribute also works and is more general (any attribute not just data), dataset will returns an object to access attributes
+        const cardHeader = document.createElement('div');
+        cardHeader.className = "card-header";
+
         const titleOfTask = document.createElement('p');
         titleOfTask.textContent = taskTitle;
-        taskContainer.appendChild(titleOfTask);
+        cardHeader.appendChild(titleOfTask);
+
+        const dueDateElement = document.createElement('p');
+        dueDateElement.textContent = `${taskDetails.dueDate}`;
+        cardHeader.appendChild(dueDateElement);
+        taskContainer.appendChild(cardHeader);
+
+        const expandable = document.createElement("div");
+        expandable.className = "expand";
 
         const descriptionElement = document.createElement('p');
         descriptionElement.textContent = `Description: ${taskDetails.description}`;
-        taskContainer.appendChild(descriptionElement);
-
-        const dueDateElement = document.createElement('p');
-        dueDateElement.textContent = `Due Date: ${taskDetails.dueDate}`;
-        taskContainer.appendChild(dueDateElement);
+        expandable.appendChild(descriptionElement);
 
         const priorityElement = document.createElement('p');
         priorityElement.textContent = `Priority: ${taskDetails.priority}`;
-        taskContainer.appendChild(priorityElement);
+        expandable.appendChild(priorityElement);
+        cardHeader.appendChild(expandable);
+
+        taskContainer.addEventListener('click', () => {
+            // Toggle the visibility of the expandable section
+            if (expandable.style.display === "none") {
+                expandable.style.display = "block";
+            } else {
+                expandable.style.display = "none";
+            }
+        });
 
         const completeTaskButton = document.createElement("button");
         // NOTE: Tasks are likely not in chronological order, must create an array similar to what I did for project order
@@ -100,7 +117,7 @@ export function generateProjectTasks(parentContainer, forWhichProject) {
                 localStorage.setItem("All", JSON.stringify(allTasks));
             }
         });;
-        taskContainer.appendChild(completeTaskButton);
+        cardHeader.appendChild(completeTaskButton);
         parentContainer.appendChild(taskContainer);
         
     });
