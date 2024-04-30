@@ -156,12 +156,24 @@ export function createToDoList(key) {
     addTaskButton.addEventListener("click", () => {
         taskDialog.showModal();
     });
+
+    const titleElem = document.querySelector('#title');
+    const descriptionElem = document.querySelector('#description');
+    const dueDateElem = document.querySelector('#dueDate');
+    const radioButtons = document.querySelectorAll(`input[name="priority"]`);
+    // This will preserve the inital value if a person wants to modify the task
+    // It wil be used to reference that project and task to update the value in localStorage
+    const preservedTitle = titleElem.value; // Default value of "" if nothing is set
+    /* TASK: WORK ON THE MODIFY ASPECT OF TASK
+    upon clicking the modify task, it opens the dialog again but displays the task information
+    preserve the title of it so when a user submits task to change it, we can reference the project
+    to modify the value in storage
+    upon clicking submit, it will check whether there is a preserved value or not,
+    if there is, then it will grab the localStorage project and then change the value of the task */
+    
     submitTaskButton.addEventListener("click", (event) => {
         event.preventDefault();
-        const titleElem = document.querySelector('#title');
-        const descriptionElem = document.querySelector('#description');
-        const dueDateElem = document.querySelector('#dueDate');
-        const radioButtons = document.querySelectorAll(`input[name="priority"]`);
+        
         let checkedButton = null;
     
         radioButtons.forEach(radioButton => {

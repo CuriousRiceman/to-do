@@ -62,6 +62,7 @@ export function generateProjectTasks(parentContainer, forWhichProject) {
         cardHeader.className = "card-header";
 
         const titleOfTask = document.createElement('p');
+        titleOfTask.className = "title-of-task-element";
         titleOfTask.textContent = taskTitle;
         cardHeader.appendChild(titleOfTask);
 
@@ -74,13 +75,39 @@ export function generateProjectTasks(parentContainer, forWhichProject) {
         expandable.className = "expand";
 
         const descriptionElement = document.createElement('p');
+        descriptionElement.className = "description-element";
         descriptionElement.textContent = `Description: ${taskDetails.description}`;
         expandable.appendChild(descriptionElement);
 
         const priorityElement = document.createElement('p');
         priorityElement.textContent = `Priority: ${taskDetails.priority}`;
         expandable.appendChild(priorityElement);
-        cardHeader.appendChild(expandable);
+        
+        const modifyElement = document.createElement('button');
+        modifyElement.type = "button";
+        modifyElement.class = "modify-button";
+        modifyElement.textContent = "Modify";
+        
+        const taskDialog = document.querySelector("#new-task-dialog");
+        modifyElement.addEventListener("click", () => {
+            taskDialog.showModal();
+            const titleElem = document.querySelector('#title');
+            const descriptionElem = document.querySelector('#description');
+            const dueDateElem = document.querySelector('#dueDate');
+            const radioButtons = document.querySelectorAll(`input[name="priority"]`);
+            titleElem.value = taskTitle;
+            descriptionElem.value = taskDetails.description;
+            dueDateElem.value = taskDetails.dueDate;
+            radioButtons.forEach(radioButton => {
+                if (radioButton.value === taskDetails.priority) {
+                    radioButton.checked = true;
+                } else {
+                    return;
+                }
+            });
+        });
+        expandable.appendChild(modifyElement);
+        taskContainer.appendChild(expandable);
 
         taskContainer.addEventListener('click', () => {
             // Toggle the visibility of the expandable section
