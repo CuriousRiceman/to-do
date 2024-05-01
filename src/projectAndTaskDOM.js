@@ -140,7 +140,7 @@ export function generateProjectTasks(parentContainer, forWhichProject) {
                 generateProjectTasks(parentContainer, forWhichProject);
                 // Will delete from the "All" object as well
                 const allTasks = JSON.parse(localStorage.getItem("All"));
-                delete allTask[taskTitle];
+                delete allTasks[taskTitle];
                 localStorage.setItem("All", JSON.stringify(allTasks));
             }
         });;
