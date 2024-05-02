@@ -89,6 +89,10 @@ export function generateProjectTasks(parentContainer, forWhichProject) {
         modifyElement.textContent = "Modify";
         
         const taskDialog = document.querySelector("#new-task-dialog");
+        // IMPORTANT NOTE: LocalStorage do not maintain order of entries, objects order numeric keys in ascending order, string keys in order they are inserted
+        // Something to think about is how to modify the task while preserved its display order
+        // Possibly use an array to maintain order that is easier to change values
+        
         modifyElement.addEventListener("click", () => {
             taskDialog.showModal();
             const titleElem = document.querySelector('#title');
@@ -105,7 +109,31 @@ export function generateProjectTasks(parentContainer, forWhichProject) {
                     return;
                 }
             });
+            const preservedTaskTitle = titleElem.value;
+            // Would usually use removeEventListener but I used an arrow function so it won't work (need to be defined or reference exact function name)
+            // But I am to lazy to change it so...
+            const submitTaskButton = document.querySelector('.submit-task-button');
+            submitTaskButton.addEventListener("click", () => {
+                const projectAll = JSON.parse(localStorage.getItem("All"));
+                delete projectAll[preservedTaskTitle];
+                localStorage.setItem("All", JSON.stringify(projectAll));
+
+                const specificProject = JSON.parse(localStorage.getItem(taskDetails.whichProject));
+                delete specificProject[preservedTaskTitle];
+                localStorage.setItem("All", JSON.stringify(specificProject));
+                const newTask = {
+                    description: descriptionElem.value,
+                    dueDate: dueDateElem.value,
+                    priority: priorityElement.value,
+                    whichProject: taskDetails.whichProject,
+                };
+                specificProject[titleElem.value] = newTask;
+                localStorage.setItem(taskDetails.whichProject, JSON.stringify(specificProject));
+                generateProjectTasks(parentContainer, forWhichProject);
+                // FIX THE MODIFY BUTTON
+            });
         });
+        
         expandable.appendChild(modifyElement);
         taskContainer.appendChild(expandable);
 
