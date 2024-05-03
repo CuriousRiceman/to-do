@@ -190,34 +190,20 @@ export function createToDoList(key) {
         const projectAll = JSON.parse(localStorage.getItem("All"));
         delete projectAll[preservedTaskName];
         localStorage.setItem("All", JSON.stringify(projectAll));
-        
+
         if (preservedProjectName !== null) {
             const specificProject = JSON.parse(localStorage.getItem(preservedProjectName));
             if (preservedProjectName !== "All") {
                 delete specificProject[preservedTaskName];
                 localStorage.setItem(preservedProjectName, JSON.stringify(specificProject));
-                // const newTask = {
-                //     description: descriptionElem.value,
-                //     dueDate: dueDateElem.value,
-                //     priority: checkedButton,
-                //     whichProject: projectTaskBelongsTo,
-                // };
-                // specificProject[titleElem.value] = newTask;
-                // localStorage.setItem(projectTaskBelongsTo, JSON.stringify(specificProject));
-                // generateProjectTasks(parentContainer, forWhichProject);
-                // Note: Learn about sanitizing inputs, can definitely write a function for that
                 const myTask = new Task(titleElem.value, descriptionElem.value, dueDateElem.value, checkedButton.value, preservedProjectName);
                 myTask.storeTaskUnderProject();
-                generateProjectTasks(listTasks, key); // Displays it once a new task is created
+                generateProjectTasks(listTasks, key);
             } else {
                 const myTask = new Task(titleElem.value, descriptionElem.value, dueDateElem.value, checkedButton.value, preservedProjectName);
                 myTask.storeTaskUnderProject();
-                generateProjectTasks(listTasks, key); // Displays it once a new task is created
+                generateProjectTasks(listTasks, key);
             }
-            // const allTasks = JSON.parse(localStorage.getItem("All")); // Store in All project as well
-            // allTasks[titleElem.value] = newTask;
-            // localStorage.setItem("All", JSON.stringify(allTasks));
-            
         } else {
             // Note: Learn about sanitizing inputs, can definitely write a function for that
             const myTask = new Task(titleElem.value, descriptionElem.value, dueDateElem.value, checkedButton.value, heading.textContent);
