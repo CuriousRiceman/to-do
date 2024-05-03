@@ -161,9 +161,23 @@ export function createToDoList(key) {
     const descriptionElem = document.querySelector('#description');
     const dueDateElem = document.querySelector('#dueDate');
     const radioButtons = document.querySelectorAll(`input[name="priority"]`);
+    // Grab the preserved task title from the class name of submit button, then remove it
     
+
     submitTaskButton.addEventListener("click", (event) => {
         event.preventDefault();
+        const submitTaskButton = document.querySelector('.submit-task-button');
+        const classNames = submitTaskButton.classList;
+        let preservedProjectName = null;
+        let preservedTaskName = submitTaskButton.dataset.TaskName;
+        delete submitTaskButton.dataset.TaskName
+        classNames.forEach((className) => {
+            if (className != "submit-task-button") {
+                preservedProjectName = className;
+                submitTaskButton.classList.remove(className);
+            }
+        });
+
         let checkedButton = null;
         radioButtons.forEach(radioButton => {
             if (radioButton.checked) {
@@ -172,11 +186,44 @@ export function createToDoList(key) {
                 return;
             }
         });
-        // Note: Learn about sanitizing inputs, can definitely write a function for that
-        const myTask = new Task(titleElem.value, descriptionElem.value, dueDateElem.value, checkedButton.value, heading.textContent);
-        myTask.storeTaskUnderProject();
-        generateProjectTasks(listTasks, key); // Displays it once a new task is created
+
+        const projectAll = JSON.parse(localStorage.getItem("All"));
+        delete projectAll[preservedTaskName];
+        localStorage.setItem("All", JSON.stringify(projectAll));
         
+        if (preservedProjectName !== null) {
+            const specificProject = JSON.parse(localStorage.getItem(preservedProjectName));
+            if (preservedProjectName !== "All") {
+                delete specificProject[preservedTaskName];
+                localStorage.setItem(preservedProjectName, JSON.stringify(specificProject));
+                // const newTask = {
+                //     description: descriptionElem.value,
+                //     dueDate: dueDateElem.value,
+                //     priority: checkedButton,
+                //     whichProject: projectTaskBelongsTo,
+                // };
+                // specificProject[titleElem.value] = newTask;
+                // localStorage.setItem(projectTaskBelongsTo, JSON.stringify(specificProject));
+                // generateProjectTasks(parentContainer, forWhichProject);
+                // Note: Learn about sanitizing inputs, can definitely write a function for that
+                const myTask = new Task(titleElem.value, descriptionElem.value, dueDateElem.value, checkedButton.value, preservedProjectName);
+                myTask.storeTaskUnderProject();
+                generateProjectTasks(listTasks, key); // Displays it once a new task is created
+            } else {
+                const myTask = new Task(titleElem.value, descriptionElem.value, dueDateElem.value, checkedButton.value, preservedProjectName);
+                myTask.storeTaskUnderProject();
+                generateProjectTasks(listTasks, key); // Displays it once a new task is created
+            }
+            // const allTasks = JSON.parse(localStorage.getItem("All")); // Store in All project as well
+            // allTasks[titleElem.value] = newTask;
+            // localStorage.setItem("All", JSON.stringify(allTasks));
+            
+        } else {
+            // Note: Learn about sanitizing inputs, can definitely write a function for that
+            const myTask = new Task(titleElem.value, descriptionElem.value, dueDateElem.value, checkedButton.value, heading.textContent);
+            myTask.storeTaskUnderProject();
+            generateProjectTasks(listTasks, key); // Displays it once a new task is created
+        }
         // Reset the values
         titleElem.value = "";
         descriptionElem.value = "";

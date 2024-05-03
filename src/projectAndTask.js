@@ -39,12 +39,14 @@ export class Task {
         };
         projectTaskObject[this.title] = newTask;
         localStorage.setItem(this.whichProject, JSON.stringify(projectTaskObject));
-        
-        const allTasks = JSON.parse(localStorage.getItem("All")); // Store in All project as well
-        allTasks[this.title] = newTask;
-        localStorage.setItem("All", JSON.stringify(allTasks));
+        if (this.whichProject !== "All") {
+            const allTasks = JSON.parse(localStorage.getItem("All")); // Store in All project as well
+            allTasks[this.title] = newTask;
+            localStorage.setItem("All", JSON.stringify(allTasks));
+    
+        }
     }
-
+    
     getWhichProject() {
         return this.whichProject;
     }
