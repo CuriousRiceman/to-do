@@ -10,10 +10,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 1rem 0;
 }
 
 .header {
-    border: 2px solid black;
+    /* border: 2px solid black; */
 }
 
 .main-container {
@@ -30,21 +31,24 @@
     flex-direction: column;
 }
 
-.side-header {
-    border: 2px solid black;
+.sidebar-header {
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 1em;
+    gap: 1em;
 }
 
-.add-task, .add-project {
-    display: inline-block;
-    margin: 10% 5% 10% 10%;
+.add-project {
+    font-size: 2em;
 }
 
 .add-task-button, .add-project-button {
     width: 150px; /* Pixels in this case to preserve width regardless of viewport resizing */
     /* overflow-wrap: break-word; /* Assuming you use % for width, this will prevent overflow but it looks weird if you resize the width to a small size */
+    font-size: 1em;
 }
 
 .sidebar-list {
@@ -53,6 +57,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 1em 0;
     /* overflow-wrap: break-word; /* prevent overflow to other divs if text is long, can set to 'anywhere' as well, has different behavior in certain cases */
 }
 
@@ -60,6 +65,7 @@
     border: 2px solid black;
     margin: 0.5rem 0;
     width: 75%;
+    font-size: 1em;
 }
 
 #new-task-dialog, #new-project-dialog { /* Since I removed all margin and padding at top (css reset) */
@@ -107,18 +113,19 @@
     width: 100%;
     height: 10%;
     align-content: center;
+    padding-left: 0.5em;
 }
 
 .tasks-display {
     display: grid; /* If using flex, use flex-wrap to allow cards to wrap to next line */
-    border: 2px solid black;
+    /* border: 2px solid black; */
     width: 100%;
     height: 80%;
     margin: 1em 0;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* e.g. minmax(300px 1,fr) means min width of 300px, maximum width of 1fr which is a fraction of remaining space */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* e.g. minmax(300px 1,fr) means min width of 300px, maximum width of 1fr which is a fraction of remaining space */
     /* Auto-fit creates columns that stretch to fit the available space, auto-fill may leave empty space at end if not filled entirely
     auto-fill can meet the max value but not use the remaining space (tries to create as much columns that are 200 pixels) */
-    grid-template-rows: auto; /* IMPORTANT: Set to auto and set the task-container height manually instead of using repeat and min(100px) */
+    grid-template-rows: repeat(auto-fill, minmax(100px, 1fr)); /* IMPORTANT: Set to auto and set the task-container height manually instead of using repeat and min(100px) */
     /* If I were to set it to grid-template-rows: repeat(auto-fill, 100px)
     It will attempt to create as many rows that are 100 pixels tall WITHIN the constraints of the parent container
     Hypothetically speaking, if the parent container was 500 pixels tall, the grid-template would fit 5 tasks
@@ -128,6 +135,7 @@
     gap: 5px;
     justify-content: space-evenly;
     overflow-y: scroll;
+    gap: 1.25em;
 }
 
 .task-container { /* The card */
@@ -140,15 +148,17 @@
 }
 
 .card-header {
-    border: 2px solid blue;
+    /* border: 2px solid blue; */
     box-sizing: border-box;
     overflow-wrap: break-word; 
+    padding: 1em 0 0 1em;
 }
 
 .expand {
-    border: 2px solid red;
+    /* border: 2px solid red; */
     display: none;
     box-sizing: border-box;
+    padding: 0 0 0 1em;
 }
 
 /* .description-element, .title-of-task-element {
@@ -159,4 +169,7 @@
     float: right;
     margin-right: 5px;
     border-style: none;
+    width: 5%;
+    cursor: pointer;
+    height: 100%;
 }
